@@ -399,7 +399,7 @@ function template_plugin_default(pluginArgs) {
           waitUntil: workerContext.waitUntil.bind(workerContext)
         };
         const response = await handler(context);
-        return new Response([101, 204, 205, 304].includes(response.status) ? null : response.body, { ...response, headers: new Headers(response.headers) });
+        return response
       } else {
         return next();
       }

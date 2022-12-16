@@ -1,5 +1,5 @@
 {
-  "name": "@cloudflare/pages-plugin-static-forms",
+  "name": "@cardiff.marketing/pages-plugin-static-forms",
   "version": "1.0.0",
   "main": "index.js",
   "types": "index.d.ts",
