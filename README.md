@@ -1,6 +1,4 @@
-## Pages Plugins
-
-# Static Forms Pages Plugin
+# Static Forms Pages Plugin for Cloudflare
 
 Bug fixed that cause all Response objects passed to have a 200 OK status code. Now you can add a redirect!
 
