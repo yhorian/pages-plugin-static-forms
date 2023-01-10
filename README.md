@@ -2,6 +2,8 @@
 
 Bug fixed that cause all Response objects passed to have a 200 OK status code. Now you can add a redirect!
 
+Added support for Cloudflare Turnstile. Add your secret key as an environment variable named 'TURNSTILE_KEY' when installing the Turnstile code.
+
 ## Installation
 
 ```sh
