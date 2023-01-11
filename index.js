@@ -8,8 +8,40 @@ var onRequestPost = async ({
   try {
     formData = await request.formData();
     name = formData.get("static-form-name").toString();
-  } catch {
+  } catch {}
+
+  if (pluginArgs.turnstile) {
+    let token, secret;
+    token = formData.get('cf-turnstile-response') ? formData.get('cf-turnstile-response').toString() : false;
+    secret = env.TURNSTILE_KEY ? env.TURNSTILE_KEY.toString() : false;
+    if (!token) {
+      return new Response(`Turnstile = true - but no token found. Check the widget is rendering inside the <form> of your page: https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/.`, {
+        status: 512
+      })
+    };
+    if (!secret) {
+      return new Response(`Turnstile token found - but no secrey key set. Set an Environment variable with your Turnstile secret called "TURNSTILE_KEY" under Pages > Settings > Environment variables.`, {
+        status: 512
+      });
+    }
+    let ip = request.headers.get('CF-Connecting-IP');
+    let captchaData = new FormData();
+    captchaData.append('secret', secret);
+    captchaData.append('response', token);
+    captchaData.append('remoteip', ip);
+    let url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    let result = await fetch(url, {
+      body: captchaData,
+      method: 'POST',
+    });
+    let outcome = await result.json();
+    if (!outcome.success) {
+      console.log("Token Failure from " + ip);
+      return next();
+    }
+    formData.delete("cf-turnstile-response");
   }
+  
   if (name) {
     formData.delete("static-form-name");
     return pluginArgs.respondWith({ formData, name });

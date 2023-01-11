@@ -4,6 +4,7 @@ import staticFormsPlugin from "@cardiff.marketing/pages-plugin-static-forms";
 
 
 export const onRequest: PagesFunction = staticFormsPlugin({
+  turnstile: false,
   respondWith: ({ formData, name }) => {
     // Play with the form data here.
     // Name: Refers to the name of the form set by the "data-static-form-name" attribute.

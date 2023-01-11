@@ -2,13 +2,17 @@
 
 Bug fixed that cause all Response objects passed to have a 200 OK status code. Now you can add a redirect!
 
+Added support for Cloudflare Turnstile. 
 ## Installation
 
 ```sh
 npm i --save https://github.com/yhorian/pages-plugin-static-forms
 ```
 
-Copy the **functions/_middleware.ts** file from this repository over to your own /functions folder. Cloudflare will then compile
+Copy the **functions/_middleware.ts** file from this repository over to your own /functions folder. Cloudflare will then compile it when it builds.
+
+If you've changed the "turnstile = false" setting to true, you'll also need to [add a widget to the form](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/) and add your secret key as an environment variable named 'TURNSTILE_KEY' when installing the Turnstile code. 
+
 
 To use multiple middleware handlers or change the routes used, see this documentation on [Chaining middleware](https://developers.cloudflare.com/pages/platform/functions/middleware/).
 
